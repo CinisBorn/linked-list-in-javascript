@@ -40,6 +40,7 @@ class LinkedList {
   insertAt(position: number, value: any) {
     if (this.isEmpty()) {
       this.insert(value);
+      return;
     };
     
     let currentItem = this.get(position);
@@ -121,15 +122,8 @@ class LinkedList {
   }
 };
 
-let t = new LinkedList();
+let list = new LinkedList();
 
-t.insert("a");
-t.insert("e");
+list.insertAt(999, 99); 
 
-console.dir(t, { depth: null });
-// console.dir(t.get(2), { depth: null });
-// console.dir(t.delete(2), { depth: null });
-t.insertAt(1, "b");
-t.insertAt(2, "c");
-t.insertAt(3, "d");
-console.dir(t, { depth: null });
+console.dir(list.get(999), { depth: null });
