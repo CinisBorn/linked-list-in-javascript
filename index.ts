@@ -37,6 +37,26 @@ class LinkedList {
     this.size += 1;
   }
   
+  insertAt(position: number, value: any) {
+    if (this.isEmpty()) {
+      this.insert(value);
+    };
+    
+    let currentItem = this.get(position);
+    let previousItem = this.get(position - 1);
+    
+    if (previousItem) {
+      let newItem = new Item(value, currentItem);
+      previousItem.next = newItem;
+      
+      if (!newItem.next) {
+        this.end = newItem;
+      }
+    }
+    
+    this.size += 1;
+  }
+  
   isEmpty(): boolean {
     if (!this.start && !this.end) {
       return true;
@@ -104,7 +124,12 @@ class LinkedList {
 let t = new LinkedList();
 
 t.insert("a");
+t.insert("e");
 
-console.dir(t.get(2), { depth: null });
-console.dir(t.delete(2), { depth: null });
+console.dir(t, { depth: null });
+// console.dir(t.get(2), { depth: null });
+// console.dir(t.delete(2), { depth: null });
+t.insertAt(1, "b");
+t.insertAt(2, "c");
+t.insertAt(3, "d");
 console.dir(t, { depth: null });
