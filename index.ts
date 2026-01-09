@@ -114,8 +114,35 @@ class LinkedList {
     let nextItem = item.next;
     let previousItem = this.get(position - 1);
     
-    if (previousItem) {
+    if (previousItem && nextItem) {
       previousItem.next = nextItem;
+      this.size -= 1;
+    }
+    else if (!nextItem && !previousItem) {
+      this.end = null;
+      this.start = null;
+      this.size = 0;
+    }
+    else if (!previousItem && nextItem) {
+      this.start = nextItem
+      
+      if (this.size === 2) {
+        this.end = nextItem;
+        this.size = 1; 
+      };
+    
+      this.size -= 1;
+    }
+    else if (previousItem && !nextItem) {
+      previousItem.next = null;
+      this.end = previousItem;
+      
+      if (this.size === 2) {
+        this.start = previousItem;
+        this.size = 1;
+      }
+      
+      this.size -= 1;
     }
     
     return item;
@@ -124,6 +151,11 @@ class LinkedList {
 
 let list = new LinkedList();
 
-list.insertAt(999, 99); 
+list.insert("a");
+list.insert("b");
+list.insert("c");
+list.insert("d");
 
-console.dir(list.get(999), { depth: null });
+list.delete(3);
+
+console.dir(list, { depth: null });
