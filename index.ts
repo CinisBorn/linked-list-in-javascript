@@ -77,11 +77,11 @@ class LinkedList {
     */
     
     if (position > this.size) {
-      return this.end; 
+      return null; 
     }
     
     if (position < 0) {
-      return this.start;
+      return null;
     }
     
     let current = this.start;
