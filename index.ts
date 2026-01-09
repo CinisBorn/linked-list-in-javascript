@@ -45,20 +45,28 @@ class LinkedList {
     }
   }
 
-  get(position: number): Item | boolean | null {
+  get(position: number): Item | null {
     if (this.isEmpty()) {
-      console.warn("The List is empty");
-      return false;
+      return null;
     };
+    
+    /*
+    * Instead to return null when the position is out of interval, the 
+    * method return the first or last time. It prevents common bugs
+    */
     
     if (position > this.size) {
       return this.end; 
     }
     
+    if (position < 0) {
+      return this.start;
+    }
+    
     let current = this.start;
     let idx = 0;
     
-    while (current != null) {
+    while (current !== null) {
       if (idx !== position) {
         current = current.next;
         idx++;
@@ -67,20 +75,36 @@ class LinkedList {
       }
     }
     
-    if (!current) {
-      return false;
-    } 
-    
     return current;
+  }
+  
+  // Null is returned when the operation fail in common scenarios
+  delete(position: number): Item | null {
+    if (this.isEmpty()) {
+      return null;
+    }
+    
+    let item = this.get(position);
+    
+    if (!item) {
+      return null;
+    }
+    
+    let nextItem = item.next;
+    let previousItem = this.get(position - 1);
+    
+    if (previousItem) {
+      previousItem.next = nextItem;
+    }
+    
+    return item;
   }
 };
 
 let t = new LinkedList();
 
 t.insert("a");
-t.insert("b");
-t.insert("c");
-t.insert("d");
 
+console.dir(t.get(2), { depth: null });
+console.dir(t.delete(2), { depth: null });
 console.dir(t, { depth: null });
-console.dir(t.get(1), { depth: null });
