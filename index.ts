@@ -43,6 +43,21 @@ class LinkedList {
       return;
     };
     
+    if (position > this.size) {
+      this.insert(value);
+      
+      return;
+    }
+    
+    if (position < 0) {
+      let newItem = new Item(value, this.start);
+      
+      this.start = newItem;
+      this.size += 1;
+      
+      return; 
+    }
+    
     let currentItem = this.get(position);
     let previousItem = this.get(position - 1);
     
@@ -52,7 +67,14 @@ class LinkedList {
       
       if (!newItem.next) {
         this.end = newItem;
-      }
+      };
+    } else {
+      let newItem = new Item(value, currentItem);
+      this.start = newItem;
+      
+      if (!newItem.next) {
+        this.end = newItem;
+      };
     }
     
     this.size += 1;
@@ -152,10 +174,7 @@ class LinkedList {
 let list = new LinkedList();
 
 list.insert("a");
-list.insert("b");
-list.insert("c");
-list.insert("d");
 
-list.delete(3);
+
 
 console.dir(list, { depth: null });
