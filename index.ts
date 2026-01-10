@@ -81,11 +81,7 @@ class LinkedList {
   }
   
   isEmpty(): boolean {
-    if (!this.start && !this.end) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.size === 0;
   }
 
   get(position: number): Item | null {
