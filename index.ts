@@ -8,16 +8,16 @@ class Node<T> {
 };
 
 class LinkedList<T> {
-  start: Node<T> | null = null; 
-  end: Node<T> | null = null;
+  private head: Node<T> | null = null; 
+  private tail: Node<T> | null = null;
   size = 0;
 
   insert(value: T) {
     if (this.isEmpty()) {
       let singleItem = new Node(value, null);
       
-      this.start = singleItem;
-      this.end = singleItem;
+      this.head = singleItem;
+      this.tail = singleItem;
       
       this.size += 1;
       
@@ -26,8 +26,8 @@ class LinkedList<T> {
     
     let newValue = new Node(value, null); 
     
-    this.end!.next = newValue;
-    this.end = newValue;
+    this.tail!.next = newValue;
+    this.tail = newValue;
     this.size += 1;
   }
   
@@ -44,9 +44,9 @@ class LinkedList<T> {
     }
     
     if (position <= 0) {
-      let newItem = new Node(value, this.start);
+      let newItem = new Node(value, this.head);
       
-      this.start = newItem;
+      this.head = newItem;
       this.size += 1;
       
       return; 
@@ -60,14 +60,14 @@ class LinkedList<T> {
       previousItem.next = newItem;
       
       if (!newItem.next) {
-        this.end = newItem;
+        this.tail = newItem;
       };
     } else {
       let newItem = new Node(value, currentItem);
-      this.start = newItem;
+      this.head = newItem;
       
       if (!newItem.next) {
-        this.end = newItem;
+        this.tail = newItem;
       };
     }
     
@@ -96,7 +96,7 @@ class LinkedList<T> {
       return null;
     }
     
-    let current = this.start;
+    let current = this.head;
     let idx = 0;
     
     while (current !== null) {
@@ -131,15 +131,15 @@ class LinkedList<T> {
       this.size -= 1;
     }
     else if (!nextItem && !previousItem) {
-      this.end = null;
-      this.start = null;
+      this.tail = null;
+      this.head = null;
       this.size = 0;
     }
     else if (!previousItem && nextItem) {
-      this.start = nextItem
+      this.head = nextItem
       
       if (this.size === 2) {
-        this.end = nextItem;
+        this.tail = nextItem;
         this.size = 1; 
       };
     
@@ -147,10 +147,10 @@ class LinkedList<T> {
     }
     else if (previousItem && !nextItem) {
       previousItem.next = null;
-      this.end = previousItem;
+      this.tail = previousItem;
       
       if (this.size === 2) {
-        this.start = previousItem;
+        this.head = previousItem;
         this.size = 1;
         
         return item;
