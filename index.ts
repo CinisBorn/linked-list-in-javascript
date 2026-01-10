@@ -4,6 +4,7 @@ class Node<T> {
   
   constructor(v: T, i: Node<T> | null) {
     this.value = v;
+    this.next = i;
   }
 };
 
@@ -35,47 +36,35 @@ class LinkedList<T> {
     return;
   }
   
-  insertAt(position: number, value: any) {
-    if (this.isEmpty()) {
+  insertAt(position: number, value: any): boolean {
+    if (position < 0 || position > this.size) {
+      return false;
+    }
+    
+    if (!this.head) {
       this.insert(value);
-      return;
+      return true
     };
     
-    if (position > this.size) {
-      this.insert(value);
-      
-      return;
-    }
+    let current: Node<T> | null = this.head;
+    let previous: Node<T> | null = null;
+    let index = 0;
     
-    if (position <= 0) {
-      let newItem = new Node(value, this.head);
-      
-      this.head = newItem;
-      this.size += 1;
-      
-      return; 
-    }
+    while (current && index < position) {
+      previous = current;
+      current = current.next;
+
+      index++;
+    };
     
-    let currentItem = this.get(position);
-    let previousItem = this.get(position - 1);
+    if (previous) {
+      let newNode = new Node(value, current);
+      previous.next = newNode;
+
+      this.size++;
+    };
     
-    if (previousItem) {
-      let newItem = new Node(value, currentItem);
-      previousItem.next = newItem;
-      
-      if (!newItem.next) {
-        this.tail = newItem;
-      };
-    } else {
-      let newItem = new Node(value, currentItem);
-      this.head = newItem;
-      
-      if (!newItem.next) {
-        this.tail = newItem;
-      };
-    }
-    
-    this.size += 1;
+    return true 
   }
   
   isEmpty(): boolean {
@@ -169,8 +158,6 @@ class LinkedList<T> {
 
 let list = new LinkedList();
 
-list.insert("a");
-list.insert("b");
-list.insert("c");
+list.insertAt(2, "b");
 
 console.dir(list, { depth: null });
