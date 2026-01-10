@@ -162,6 +162,8 @@ class LinkedList {
       if (this.size === 2) {
         this.start = previousItem;
         this.size = 1;
+        
+        return item;
       }
       
       this.size -= 1;
@@ -174,7 +176,8 @@ class LinkedList {
 let list = new LinkedList();
 
 list.insert("a");
+list.insert("b");
 
-
+list.delete(1);
 
 console.dir(list, { depth: null });
