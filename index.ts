@@ -71,37 +71,28 @@ class LinkedList<T> {
     return this.size === 0;
   }
 
-  get(position: number): Node<T> | null {
+  get(position: number): any | boolean {
     if (this.isEmpty()) {
-      return null;
+      return false;
     };
     
-    /*
-    * Instead to return null when the position is out of interval, the 
-    * method return the first or last time. It prevents common bugs
-    */
-    
-    if (position > this.size) {
-      return null; 
+    if (position < 0 || position >= this.size) {
+      return false;
     }
     
-    if (position < 0) {
-      return null;
+    let current: Node<T> | null = this.head;
+    let index = 0;
+   
+    while (current && index < position) {
+      current = current.next;
+      index++
     }
     
-    let current = this.head;
-    let idx = 0;
-    
-    while (current !== null) {
-      if (idx !== position) {
-        current = current.next;
-        idx++;
-      } else {
-        break;
-      }
+    if (!current) {
+      return false;
     }
     
-    return current;
+    return current.value;
   }
   
   // Null is returned when the operation fail in common scenarios
@@ -158,6 +149,10 @@ class LinkedList<T> {
 
 let list = new LinkedList();
 
-list.insertAt(2, "b");
+list.insert("a");
+list.insert("b");
+list.insert("c");
+list.insert("c");
+list.insert("z");
 
-console.dir(list, { depth: null });
+console.dir(list.get(-1), { depth: null });
