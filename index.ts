@@ -12,23 +12,27 @@ class LinkedList<T> {
   private tail: Node<T> | null = null;
   size = 0;
 
-  insert(value: T) {
-    if (this.isEmpty()) {
-      let singleItem = new Node(value, null);
-      
-      this.head = singleItem;
-      this.tail = singleItem;
-      
-      this.size += 1;
-      
+  insert(value: T): void {
+    if (!this.head) {
+      this.head = new Node(value, null);
+      this.size++ 
       return;
     };
     
-    let newValue = new Node(value, null); 
+    let current: Node<T> | null = this.head;
+    let previous: Node<T> | null = null;
     
-    this.tail!.next = newValue;
-    this.tail = newValue;
-    this.size += 1;
+    while (current) {
+      previous = current;
+      current = current.next
+    }
+    
+    if (previous) {
+      previous.next = new Node(value, null);
+      this.size++;
+    }
+    
+    return;
   }
   
   insertAt(position: number, value: any) {
@@ -167,7 +171,6 @@ let list = new LinkedList();
 
 list.insert("a");
 list.insert("b");
-
-list.delete(1);
+list.insert("c");
 
 console.dir(list, { depth: null });
