@@ -49,7 +49,7 @@ class LinkedList {
       return;
     }
     
-    if (position < 0) {
+    if (position <= 0) {
       let newItem = new Item(value, this.start);
       
       this.start = newItem;
