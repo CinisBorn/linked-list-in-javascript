@@ -1,26 +1,20 @@
-class Item {
-  value: any;
-  next: Item | null;
+class Node<T> {
+  value: T;
+  next: Node<T> | null = null;
   
-  constructor(v: any, i: Item | null) {
+  constructor(v: T, i: Node<T> | null) {
     this.value = v;
-    this.next = i;
   }
 };
 
-class LinkedList {
-  start: Item | null; 
-  end: Item | null;
+class LinkedList<T> {
+  start: Node<T> | null = null; 
+  end: Node<T> | null = null;
   size = 0;
 
-  constructor() {
-    this.start = null;
-    this.end = null;
-  }
-  
-  insert(value: any) {
+  insert(value: T) {
     if (this.isEmpty()) {
-      let singleItem = new Item(value, null);
+      let singleItem = new Node(value, null);
       
       this.start = singleItem;
       this.end = singleItem;
@@ -30,7 +24,7 @@ class LinkedList {
       return;
     };
     
-    let newValue = new Item(value, null); 
+    let newValue = new Node(value, null); 
     
     this.end!.next = newValue;
     this.end = newValue;
@@ -50,7 +44,7 @@ class LinkedList {
     }
     
     if (position <= 0) {
-      let newItem = new Item(value, this.start);
+      let newItem = new Node(value, this.start);
       
       this.start = newItem;
       this.size += 1;
@@ -62,14 +56,14 @@ class LinkedList {
     let previousItem = this.get(position - 1);
     
     if (previousItem) {
-      let newItem = new Item(value, currentItem);
+      let newItem = new Node(value, currentItem);
       previousItem.next = newItem;
       
       if (!newItem.next) {
         this.end = newItem;
       };
     } else {
-      let newItem = new Item(value, currentItem);
+      let newItem = new Node(value, currentItem);
       this.start = newItem;
       
       if (!newItem.next) {
@@ -84,7 +78,7 @@ class LinkedList {
     return this.size === 0;
   }
 
-  get(position: number): Item | null {
+  get(position: number): Node<T> | null {
     if (this.isEmpty()) {
       return null;
     };
@@ -118,7 +112,7 @@ class LinkedList {
   }
   
   // Null is returned when the operation fail in common scenarios
-  delete(position: number): Item | null {
+  delete(position: number): Node<T> | null {
     if (this.isEmpty()) {
       return null;
     }
