@@ -10,7 +10,6 @@ class Node<T> {
 
 class LinkedList<T> {
   private head: Node<T> | null = null; 
-  private tail: Node<T> | null = null;
   size = 0;
 
   insert(value: T): void {
@@ -95,55 +94,38 @@ class LinkedList<T> {
     return current.value;
   }
   
-  // Null is returned when the operation fail in common scenarios
-  delete(position: number): Node<T> | null {
-    if (this.isEmpty()) {
+  delete(value: any): T | null {
+    if (!this.head) {
       return null;
     }
+
+    let current: Node<T> | null = this.head;
+    let previous: Node<T> | null = null;
     
-    let item = this.get(position);
-    
-    if (!item) {
-      return null;
-    }
-    
-    let nextItem = item.next;
-    let previousItem = this.get(position - 1);
-    
-    if (previousItem && nextItem) {
-      previousItem.next = nextItem;
-      this.size -= 1;
-    }
-    else if (!nextItem && !previousItem) {
-      this.tail = null;
-      this.head = null;
-      this.size = 0;
-    }
-    else if (!previousItem && nextItem) {
-      this.head = nextItem
-      
-      if (this.size === 2) {
-        this.tail = nextItem;
-        this.size = 1; 
+    while (current) {
+      if (current.value === value) {
+        break;
       };
-    
-      this.size -= 1;
-    }
-    else if (previousItem && !nextItem) {
-      previousItem.next = null;
-      this.tail = previousItem;
       
-      if (this.size === 2) {
-        this.head = previousItem;
-        this.size = 1;
-        
-        return item;
-      }
-      
-      this.size -= 1;
+      previous = current;
+      current = current.next;
     }
     
-    return item;
+    if (!current) {
+      return null;
+    }
+    
+    if (!previous) {
+      this.head = current.next;
+      this.size--;
+      
+      return current.value;
+    }
+    
+    previous.next = current.next;
+    this.size--;
+    
+    return current.value;
   }
 };
 
@@ -151,8 +133,6 @@ let list = new LinkedList();
 
 list.insert("a");
 list.insert("b");
-list.insert("c");
-list.insert("c");
-list.insert("z");
+list.delete("b");
 
-console.dir(list.get(-1), { depth: null });
+console.dir(list, { depth: null });
