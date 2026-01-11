@@ -96,7 +96,7 @@ class LinkedList<T> {
     return current.value;
   }
   
-  delete(value: any): T | null {
+  remove(value: any): T | null {
     if (!this.head) {
       return null;
     }
