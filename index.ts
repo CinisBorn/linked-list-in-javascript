@@ -36,14 +36,14 @@ class LinkedList<T> {
   }
   
   insertAt(position: number, value: any): boolean {
+    if (position < 0 || position > this.size) {
+      return false;
+    }
+    
     if (!this.head) {
       this.insert(value);
       return true
     };
-    
-    if (position < 0 || position >= this.size) {
-      return false;
-    }
     
     let current: Node<T> | null = this.head;
     let previous: Node<T> | null = null;
