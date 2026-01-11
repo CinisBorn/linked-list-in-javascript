@@ -59,11 +59,11 @@ class LinkedList<T> {
     if (previous) {
       let newNode = new Node(value, current);
       previous.next = newNode;
-
-      this.size++;
     } else {
       this.head = new Node(value, current);
     }
+    
+    this.size++;
     
     return true 
   }
