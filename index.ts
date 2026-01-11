@@ -70,13 +70,13 @@ class LinkedList<T> {
     return this.size === 0;
   }
 
-  get(position: number): any | boolean {
+  get(position: number): T | null {
     if (this.isEmpty()) {
-      return false;
+      return null;
     };
     
     if (position < 0 || position >= this.size) {
-      return false;
+      return null;
     }
     
     let current: Node<T> | null = this.head;
@@ -88,7 +88,7 @@ class LinkedList<T> {
     }
     
     if (!current) {
-      return false;
+      return null;
     }
     
     return current.value;
