@@ -61,7 +61,9 @@ class LinkedList<T> {
       previous.next = newNode;
 
       this.size++;
-    };
+    } else {
+      this.head = new Node(value, current);
+    }
     
     return true 
   }
@@ -130,9 +132,5 @@ class LinkedList<T> {
 };
 
 let list = new LinkedList();
-
-list.insert("a");
-list.insert("b");
-list.delete("b");
 
 console.dir(list, { depth: null });
